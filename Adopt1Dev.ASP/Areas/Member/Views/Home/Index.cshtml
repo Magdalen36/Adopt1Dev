@@ -4,14 +4,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index de ma page membre</h1>
-
+<h1>Bienvenue sur votre page membre</h1>
+<br />
 <p class="create">
-    <a asp-action="AddPicture" asp-controller="Home" asp-area="Member"> Nouvelle image de profil</a>
+    <a asp-action="AddPicture" asp-controller="Home" asp-area="Member"> Ajouter une image de profil</a>
 </p>
 
-<a href="/Member/Home/AddPicture">test</a>
 
 <p class="create">
-    <a asp-action="Create"> Nouvelle compétence</a>
+    <a asp-action="AddSkills" asp-controller="Home" asp-area="Member"> Ajouter des compétences</a>
 </p>
+
+
+<partial name="_vosSkills" />

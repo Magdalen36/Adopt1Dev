@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Adopt1Dev.ASP.Services;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,6 +10,18 @@ namespace Adopt1Dev.ASP.Models.Form
 {
     public class UserForm
     {
+
+        IService<SkillModel, SkillForm> _skillService;
+        public UserForm(IService<SkillModel, SkillForm> service)
+        {
+            _skillService = service;
+        }
+
+        public UserForm()
+        {
+
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -27,5 +40,21 @@ namespace Adopt1Dev.ASP.Models.Form
 
         [DataType(DataType.Upload)]
         public IFormFile ImageFile { get; set; }
+
+        public List<int> SkillIds { get; set; }
+
+        public IEnumerable<SkillModel> LesSkills
+        {
+            get { return SkillService?.GetAll(); }
+        }
+
+        public IService<SkillModel, SkillForm> SkillService
+        {
+            private get { return _skillService; }
+            set
+            {
+                _skillService = value;
+            }
+        }
     }
 }

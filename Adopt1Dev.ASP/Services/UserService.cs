@@ -22,19 +22,44 @@ namespace Adopt1Dev.ASP.Services
             _dc = dc;
         }
 
-        public bool Delete(int d)
+        public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            User toDelete = _dc.Users.FirstOrDefault(x => x.Id == id);
+            if (toDelete == null)
+            {
+                return false;
+            }
+            else
+            {
+                _dc.Remove(toDelete);
+                _dc.SaveChanges();
+                return true;
+            }
         }
 
         public IEnumerable<UserModel> GetAll()
         {
-            throw new NotImplementedException();
+            IEnumerable<User> allUsers = _dc.Users;
+            return allUsers.Select(u => new UserModel { Id = u.Id, Email = u.Email });
         }
 
         public UserForm GetById(int id)
         {
-            throw new NotImplementedException();
+            User toUpdate = _dc.Users.Find(id);
+            if (toUpdate != null)
+            {
+                return new UserForm
+                {
+                    Id = toUpdate.Id,
+                    Email = toUpdate.Email,
+
+                };
+            }
+            else
+            {
+                return null;
+            }
+            //throw new NotImplementedException();
         }
 
         public void Insert(UserForm form)
@@ -66,6 +91,12 @@ namespace Adopt1Dev.ASP.Services
             model.ImageMimeType = form.ImageFile?.ContentType;
             model.ImageFile = UploadMe(form.ImageFile);
 
+            foreach (int skillId in form.SkillIds)
+            {
+                Notation n = new Notation() { UserId = form.Id, SkillId = skillId, Note = 7 };
+                _dc.Notations.Add(n);
+            }
+
             _dc.SaveChanges();
 
         }
@@ -84,5 +115,6 @@ namespace Adopt1Dev.ASP.Services
             }
             return imageEnByte;
         }
+
     }
 }

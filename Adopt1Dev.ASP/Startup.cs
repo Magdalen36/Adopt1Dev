@@ -1,5 +1,4 @@
-using Adopt1Dev.ASP.Areas.Member.Models;
-using Adopt1Dev.ASP.Areas.Member.Models.Forms;
+
 using Adopt1Dev.ASP.Models;
 using Adopt1Dev.ASP.Models.Form;
 using Adopt1Dev.ASP.Services;
@@ -34,12 +33,12 @@ namespace Adopt1Dev.ASP
         {
             services.AddControllersWithViews();
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => false;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+            //    options.CheckConsentNeeded = context => false;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
 
             //Sessions
             services.AddDistributedMemoryCache(); //Fortement recommandé, mais ne fonctionne qu'en single server
@@ -54,11 +53,12 @@ namespace Adopt1Dev.ASP
             );
 
             //Injection pour permettre l'utilisation des sessions dans les classes non mvc
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<DataContext>();
 
             services.AddScoped<IService<UserModel, UserForm>, UserService>();
+            services.AddScoped<IService<SkillModel, SkillForm>, SkillService>();
             
         }
 

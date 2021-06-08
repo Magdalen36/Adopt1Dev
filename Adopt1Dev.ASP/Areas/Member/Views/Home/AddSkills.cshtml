@@ -1,4 +1,5 @@
-﻿@*@model Adopt1Dev.ASP.Models.Form.UserForm*@
+﻿
+@model Adopt1Dev.ASP.Models.Form.UserForm
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -6,18 +7,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>AddPicture</h1>
+<h1>AddSkills</h1>
 
 <h4>UserForm</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddPicture">
+        <form asp-action="AddSkills">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label class="control-label">Votre image</label>
-                <input type="file" name="ImageFile" class="form-control-file" />
+            <div class="container">
+                <h3>Vos compétences</h3>
+                @foreach (SkillModel item in Model.LesSkills)
+                {
+                    @:<div class="col-sm-5">
+                        @:<input type="checkbox" name="ChoixSkill" value="@item.Id" /> @item.Name
+                    @:</div>
+                }
             </div>
 
             <div class="form-group">
@@ -30,3 +36,4 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+

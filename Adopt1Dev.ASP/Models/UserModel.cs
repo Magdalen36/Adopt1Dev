@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Adopt1Dev.DAL.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -37,5 +38,7 @@ namespace Adopt1Dev.ASP.Models
 
         public byte[] ImageFile { get; set; }
         public string ImageMimeType { get; set; }
+
+        public IEnumerable<Notation> Notations { get; set; }
     }
 }

@@ -24,7 +24,8 @@ namespace Adopt1Dev.ASP.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<UserModel> model = _service.GetAll();
+            return View(model);
         }
 
         public IActionResult Create()
@@ -50,6 +51,21 @@ namespace Adopt1Dev.ASP.Controllers
                 TempData["error"] = "Formulaire invalide";
                 return View(form);
             }
+        }
+
+        public IActionResult Delete([FromRoute] int id)
+        {
+            // id récupéré au push button
+            if (_service.Delete(id))
+            {
+                TempData["success"] = "Suppression OK";
+            }
+            else
+            {
+                TempData["error"] = "Erreur de suppression";
+            }
+            //pas de vue, on redirige direct
+            return RedirectToAction("Index");
         }
     }
 }
